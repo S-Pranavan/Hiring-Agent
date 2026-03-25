@@ -108,6 +108,11 @@ seed_applications = [
         "role": "AI Product Designer",
         "job_id": "ai-product-designer",
         "status": "Hiring review",
+        "match_score": "95%",
+        "soft_skills": "91%",
+        "ego": "Low",
+        "interview_score": "90%",
+        "fraud_risk": "Low",
         "timeline": [
             {"stage": "Application submitted", "status": "Completed", "date": "Mar 21", "detail": "CV and portfolio received successfully."},
             {"stage": "AI screening", "status": "Completed", "date": "Mar 22", "detail": "Strong role fit, collaboration, and clarity signals."},
@@ -136,7 +141,8 @@ seed_candidate_profiles = {
 seed_notifications = {
     1: [
         {"title": "Interview invitation", "body": "Senior Product Manager role interview scheduled for Mar 28 at 10:00 AM.", "tag": "Interview"},
-        {"title": "Status update", "body": "Your application has moved into hiring review.", "tag": "Status"}
+        {"title": "Status update", "body": "Your application has moved into hiring review.", "tag": "Status"},
+        {"title": "Selection notice", "body": "You have been shortlisted for a final discussion.", "tag": "Selection"}
     ]
 }
 
@@ -174,6 +180,10 @@ def list_applications() -> list[dict[str, Any]]:
     return deepcopy(store.applications)
 
 
+def get_application(application_id: int) -> dict[str, Any] | None:
+    return deepcopy(next((application for application in store.applications if application["id"] == application_id), None))
+
+
 def create_application(payload: dict[str, Any]) -> dict[str, Any]:
     application_id = len(store.applications) + 1
     application = {
@@ -184,6 +194,11 @@ def create_application(payload: dict[str, Any]) -> dict[str, Any]:
         "role": payload["role"],
         "job_id": payload["job_id"],
         "status": "received",
+        "match_score": "Pending",
+        "soft_skills": "Pending",
+        "ego": "Pending",
+        "interview_score": "Pending",
+        "fraud_risk": "Pending",
         "timeline": [
             {
                 "stage": "Application submitted",
@@ -213,6 +228,14 @@ def create_application(payload: dict[str, Any]) -> dict[str, Any]:
         "ego_text": None,
         "final_score": None
     }
+    store.notifications[application_id] = [
+        {
+            "title": "Application received",
+            "body": f"Your application for {payload['role']} was submitted successfully.",
+            "tag": "Application"
+        }
+    ]
+    store.interviews[application_id] = []
     return deepcopy(application)
 
 

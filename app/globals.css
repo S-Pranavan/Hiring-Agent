@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-ink antialiased;
+  background-image:
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 26%),
+    radial-gradient(circle at top right, rgba(124, 58, 237, 0.09), transparent 24%);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.container-shell {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.gradient-text {
+  @apply bg-brand bg-clip-text text-transparent;
+}
+
+.glass-panel {
+  @apply rounded-3xl border border-white/60 bg-white/75 backdrop-blur-xl shadow-soft;
+}
+
+.panel {
+  @apply rounded-3xl border border-border bg-white shadow-soft;
+}
+
+.panel-3d {
+  @apply panel relative overflow-hidden;
+  transform-style: preserve-3d;
+}
+
+.panel-3d::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.10), rgba(124, 58, 237, 0.10));
+  transform: translateZ(-1px);
+  border-radius: inherit;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(0.5px);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(124, 58, 237, 0.18));
+  box-shadow: 0 20px 60px rgba(37, 99, 235, 0.18);
+}
+
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 240ms ease, box-shadow 240ms ease;
+}
+
+.tilt-card:hover {
+  transform: perspective(1200px) rotateX(3deg) rotateY(-5deg) translateY(-4px);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14);
+}
+
+.grid-fade {
+  background-image: radial-gradient(circle at top, rgba(37, 99, 235, 0.12), transparent 35%), linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+  background-size: auto, 40px 40px, 40px 40px;
+}
+
+.metric-bar {
+  background: linear-gradient(90deg, #2563EB 0%, #7C3AED 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .tilt-card:hover {
+    transform: none;
+  }
+}

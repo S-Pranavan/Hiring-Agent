@@ -1,0 +1,5 @@
+import { TimelineItem } from "@/lib/types";
+
+export function Timeline({ items }: { items: TimelineItem[] }) {
+  return <div className="space-y-5">{items.map((item, index) => <div key={item.stage} className="flex gap-4"><div className="flex flex-col items-center"><div className="mt-1 h-3.5 w-3.5 rounded-full bg-brand" />{index !== items.length - 1 ? <div className="mt-2 h-full w-px bg-border" /> : null}</div><div className="panel flex-1 p-5"><div className="flex flex-wrap items-center justify-between gap-3"><h3 className="font-semibold text-ink">{item.stage}</h3><div className="flex items-center gap-3"><span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">{item.status}</span><span className="text-sm text-muted">{item.date}</span></div></div><p className="mt-3 text-sm leading-6 text-muted">{item.detail}</p></div></div>)}</div>;
+}

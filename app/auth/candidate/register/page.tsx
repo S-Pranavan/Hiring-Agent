@@ -1,0 +1,7 @@
+import Link from "next/link";
+import { Input, TextArea } from "@/components/forms";
+import { SiteHeader } from "@/components/site-header";
+
+export default function CandidateRegisterPage() {
+  return <div className="min-h-screen bg-surface"><SiteHeader /><main className="container-shell py-14"><div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]"><div className="rounded-[2rem] bg-brand p-8 text-white shadow-glow"><h1 className="text-3xl font-semibold">Create your candidate account</h1><p className="mt-4 leading-7 text-white/85">Register once to track applications, upload documents, complete AI interviews, and receive status updates.</p></div><form className="panel p-8"><div className="grid gap-4 sm:grid-cols-2"><Input placeholder="First name" /><Input placeholder="Last name" /></div><div className="mt-4 grid gap-4 sm:grid-cols-2"><Input placeholder="Email address" /><Input placeholder="Phone number" /></div><div className="mt-4"><Input type="password" placeholder="Create password" /></div><div className="mt-4"><TextArea placeholder="Short professional summary" /></div><button className="mt-6 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white">Create account</button><p className="mt-4 text-sm text-muted">Already registered? <Link href="/auth/candidate/login" className="font-medium text-primary">Sign in</Link></p></form></div></main></div>;
+}

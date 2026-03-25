@@ -1,0 +1,4 @@
+export function ChartCard({ title, subtitle, values }: { title: string; subtitle: string; values: { label: string; value: number }[] }) {
+  const max = Math.max(...values.map((item) => item.value), 1);
+  return <div className="panel p-6"><div className="flex items-center justify-between gap-4"><div><h3 className="text-lg font-semibold text-ink">{title}</h3><p className="mt-1 text-sm text-muted">{subtitle}</p></div><div className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-primary">Live</div></div><div className="mt-6 space-y-4">{values.map((item) => <div key={item.label}><div className="mb-2 flex items-center justify-between text-sm"><span className="text-muted">{item.label}</span><span className="font-semibold text-ink">{item.value}%</span></div><div className="h-3 rounded-full bg-slate-100"><div className="metric-bar h-3 rounded-full" style={{ width: `${(item.value / max) * 100}%` }} /></div></div>)}</div></div>;
+}

@@ -1,0 +1,12 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+import { fetchJob } from "@/lib/api";
+
+export default async function JobDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const job = await fetchJob(id);
+  if (!job) notFound();
+  return <div className="min-h-screen"><SiteHeader /><main className="container-shell py-14"><div className="grid gap-8 lg:grid-cols-[1fr_0.36fr]"><div className="space-y-8"><section className="panel p-8"><div className="flex flex-wrap gap-3"><span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-primary">{job.department}</span><span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">{job.type}</span></div><h1 className="mt-5 text-4xl font-semibold text-ink">{job.title}</h1><p className="mt-4 leading-8 text-muted">{job.summary}</p></section><section className="panel p-8"><h2 className="text-2xl font-semibold text-ink">Description</h2><ul className="mt-5 space-y-3 text-sm leading-7 text-muted">{job.description.map((item) => <li key={item}>{item}</li>)}</ul></section><section className="panel p-8"><h2 className="text-2xl font-semibold text-ink">Requirements</h2><ul className="mt-5 space-y-3 text-sm leading-7 text-muted">{job.requirements.map((item) => <li key={item}>{item}</li>)}</ul></section><section className="panel p-8"><h2 className="text-2xl font-semibold text-ink">Responsibilities</h2><ul className="mt-5 space-y-3 text-sm leading-7 text-muted">{job.responsibilities.map((item) => <li key={item}>{item}</li>)}</ul></section></div><aside className="space-y-6"><div className="rounded-[2rem] bg-brand p-8 text-white shadow-glow"><h2 className="text-2xl font-semibold">Job snapshot</h2><div className="mt-5 space-y-4 text-sm text-white/85"><p>Location: {job.location}</p><p>Experience: {job.experience}</p><p>Salary: {job.salary}</p><p>Status: {job.status}</p></div><Link href="/candidate/apply" className="mt-6 inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-primary">Apply now</Link></div><div className="panel p-6"><h3 className="text-lg font-semibold text-ink">Skills needed</h3><div className="mt-4 flex flex-wrap gap-3">{job.skills.map((skill) => <span key={skill} className="rounded-full bg-slate-100 px-3 py-2 text-sm text-slate-700">{skill}</span>)}</div></div></aside></div></main><SiteFooter /></div>;
+}

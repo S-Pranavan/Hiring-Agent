@@ -1,0 +1,12 @@
+import Link from "next/link";
+import { Input, Select } from "@/components/forms";
+import { SectionHeading } from "@/components/section-heading";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+import { fetchJobs } from "@/lib/api";
+
+export default async function JobsPage() {
+  const jobs = await fetchJobs();
+
+  return <div className="min-h-screen"><SiteHeader /><main className="container-shell py-14"><SectionHeading eyebrow="Open opportunities" title="Explore active roles" text="Search, filter, and review jobs across product, engineering, and hiring operations." /><div className="mt-8 grid gap-4 rounded-[2rem] border border-border bg-surface p-4 md:grid-cols-4"><Input placeholder="Search roles or skills" /><Select defaultValue="All locations"><option>All locations</option><option>Remote</option><option>Colombo, Sri Lanka</option><option>Singapore</option></Select><Select defaultValue="All departments"><option>All departments</option><option>Engineering</option><option>Product</option><option>Operations</option></Select><button className="rounded-2xl bg-brand px-4 py-3 text-sm font-semibold text-white">Apply filters</button></div><div className="mt-8 grid gap-6">{jobs.map((job) => <div key={job.id} className="panel p-6"><div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"><div><div className="flex flex-wrap gap-3"><span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-primary">{job.department}</span><span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">{job.type}</span></div><h2 className="mt-4 text-2xl font-semibold text-ink">{job.title}</h2><p className="mt-3 max-w-3xl leading-7 text-muted">{job.summary}</p><div className="mt-4 flex flex-wrap gap-5 text-sm text-muted"><span>{job.location}</span><span>{job.experience}</span><span>{job.salary}</span></div></div><div className="flex flex-col items-start gap-3 lg:items-end"><Link href={`/jobs/${job.id}` as any} className="rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white">View details</Link><span className="text-sm text-muted">Live backend data</span></div></div></div>)}</div></main><SiteFooter /></div>;
+}

@@ -1,0 +1,8 @@
+import { SectionHeading } from "@/components/section-heading";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+import { aboutVision } from "@/lib/data";
+
+export default function AboutPage() {
+  return <div className="min-h-screen"><SiteHeader /><main className="container-shell py-14"><SectionHeading eyebrow="About the platform" title="AI hiring built to serve people, not overwhelm them" text="The AI Hiring Agent System is designed for modern recruitment teams that need speed, structure, and transparency across candidate experience, operations, and final decision making." /><div className="mt-10 grid gap-6 lg:grid-cols-3">{aboutVision.map((item) => <div key={item.title} className="panel-3d p-6"><div className="mb-5 h-14 w-14 rounded-3xl bg-brand" /><h3 className="text-xl font-semibold text-ink">{item.title}</h3><p className="mt-3 leading-7 text-muted">{item.text}</p></div>)}</div><div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]"><div className="panel p-8"><h3 className="text-2xl font-semibold text-ink">Product mission</h3><p className="mt-4 leading-8 text-muted">Deliver a trustworthy AI-powered recruitment platform where automation reduces admin load, hiring teams stay aligned, and candidates experience a respectful process from first click to final decision.</p></div><div className="rounded-[2rem] bg-brand p-8 text-white shadow-glow"><h3 className="text-2xl font-semibold">Recruitment vision</h3><p className="mt-4 leading-8 text-white/85">Blend AI evaluation, fraud awareness, collaborative review, and clear communication into one scalable enterprise workflow.</p></div></div></main><SiteFooter /></div>;
+}

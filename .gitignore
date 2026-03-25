@@ -1,0 +1,10 @@
+node_modules/
+.next/
+frontend/
+.venv/
+__pycache__/
+*.pyc
+.env
+.docx_extract/
+.docx_extract.zip
+backend/data/*.db

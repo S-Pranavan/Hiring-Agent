@@ -4,16 +4,21 @@ import { getBackendAuthHeaders } from "@/lib/backend-auth";
 
 export async function GET() {
   const headers = await getBackendAuthHeaders();
-  const response = await fetch(`${BACKEND_BASE_URL}/candidates/`, { cache: "no-store", headers });
+  const response = await fetch(`${BACKEND_BASE_URL}/admin/communications`, {
+    cache: "no-store",
+    headers,
+  });
   const payload = await response.json();
   return NextResponse.json(payload, { status: response.status });
 }
 
 export async function POST(request: NextRequest) {
-  const formData = await request.formData();
-  const response = await fetch(`${BACKEND_BASE_URL}/candidates/upload`, {
+  const body = await request.json();
+  const headers = await getBackendAuthHeaders({ "Content-Type": "application/json" });
+  const response = await fetch(`${BACKEND_BASE_URL}/admin/communications/send`, {
     method: "POST",
-    body: formData,
+    headers,
+    body: JSON.stringify(body),
   });
   const payload = await response.json();
   return NextResponse.json(payload, { status: response.status });

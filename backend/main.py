@@ -1,10 +1,20 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.api.routes import admin, candidates, dashboard, interviews, jobs
+from backend.api.routes import admin, auth, candidates, dashboard, interviews, jobs
 from backend.core.config import settings
+from backend.data.database import init_database
 
-app = FastAPI(title=settings.app_name, version=settings.app_version)
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    init_database()
+    yield
+
+
+app = FastAPI(title=settings.app_name, version=settings.app_version, lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -14,6 +24,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
 app.include_router(jobs.router, prefix="/api/v1/jobs", tags=["jobs"])
 app.include_router(candidates.router, prefix="/api/v1/candidates", tags=["candidates"])
 app.include_router(dashboard.router, prefix="/api/v1/dashboard", tags=["dashboard"])

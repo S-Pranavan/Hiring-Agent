@@ -5,11 +5,12 @@ import { Bell, Menu, Search } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Brand } from "@/components/brand";
+import { LogoutButton } from "@/components/logout-button";
 import { portalNav, roleThemes } from "@/lib/data";
 import { Role } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-export function PortalShell({ role, children }: Readonly<{ role: Role; children: React.ReactNode }>) {
+export function PortalShell({ role, children, currentUser }: Readonly<{ role: Role; children: React.ReactNode; currentUser: string }>) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const nav = portalNav[role];
@@ -44,7 +45,8 @@ export function PortalShell({ role, children }: Readonly<{ role: Role; children:
               </div>
               <div className="flex items-center gap-3">
                 <button className="rounded-full border border-border p-2"><Bell className="h-5 w-5 text-muted" /></button>
-                <div className="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-ink">Ava Morgan</div>
+                <div className="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-ink">{currentUser}</div>
+                <LogoutButton />
               </div>
             </div>
           </header>
